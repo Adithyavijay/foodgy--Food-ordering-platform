@@ -26,8 +26,9 @@ const Body= ()=>{
         console.log(listOfRestaurants);
         }
 
-    if(listOfRestaurants.length===0)
-    return (<Shimmer/>)
+        if (!listOfRestaurants || listOfRestaurants.length === 0) {
+            return (<Shimmer/>);
+          }
     return ( 
        <div className="ml-16">
             
@@ -60,11 +61,11 @@ const Body= ()=>{
         
            
            <div className="res-containers flex flex-wrap"> 
-          {  
-             filteredRest.map((rest)=>(
-                <ResCards key={rest.info.id} resData={rest}/>
-            ))
-          }
+           {  
+             filteredRest && filteredRest.map((rest) => (
+              <ResCards key={rest.info.id} resData={rest}/>
+             ))
+}
            </div> 
        </div>
     )
