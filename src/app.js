@@ -6,13 +6,22 @@ import { createBrowserRouter,Outlet,RouterProvider,Outlet } from 'react-router-d
 import About from './components/About';
 import Error from './components/Error';
 import Contact from './components/Contact';
-import { Link } from 'react-router-dom';
+import RestoMenu from './components/RestoMenu'
+import { Link } from 'react-router-dom';;
+import { lazy,Suspense } from 'react';
+import Cart from './components/Cart';
+import { Provider } from 'react-redux';
+import appStore from './utils/appStore';
+
+const Grocery =lazy(()=>import('./components/Grocery'))
 
 const AppLayout =()=>{
     return (
-        <>
+        <> 
+        <Provider store= {appStore}>
         <Header/>
         <Outlet/>
+        </Provider>
         </>
         
     )
@@ -35,8 +44,22 @@ const appRouter = createBrowserRouter([
             {
                 path : '/contact',
                 element : <Contact/>
+            },
+                {
+                path :'/rest/:id',
+                element :<RestoMenu/>           
+            },
+            {
+                path  : '/grocery',
+                element : <Suspense fallback={<h1 className="text-3xl font-bold">LOADING..</h1>}>
+                <Grocery />
+              </Suspense>
+            } ,
+            {
+                path : '/cart',
+                element : <Cart/>
             }
-        ]
+                   ]
     }  
   
 ]) 

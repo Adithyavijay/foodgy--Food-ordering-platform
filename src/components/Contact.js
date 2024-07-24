@@ -1,11 +1,17 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { AiOutlineMenu, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 
-const Contact = ()=>{
+const Contact = () => {
+   
+
     return (
-        <div className="m-5">
-            <h1 className="text-4xl font-bold ">
-                contact us
-            </h1>
-        </div>
+      <> <div className="flex justify-center items-center min-h-64" >
+        Contact us at support@foodgy.com
+      </div>
+       
+      </> 
     )
-}
-export default Contact ;
+};
+
+export default Contact;

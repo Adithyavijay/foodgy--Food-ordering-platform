@@ -1,29 +1,26 @@
-import ResCards from "./ResCards";
+import ResCards,{withPromotedLabel} from "./ResCards";
 import { useEffect, useState } from "react";
 import resList from '../utils/mockData';
 import Shimmer from "./shimmer";
-
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import useRestaurantList from "../utils/useRestaurantList";
+import useRestaurantList from "../utils/useRestaurantList";
 
 
 const Body= ()=>{
-    const [listOfRestaurants,setListOfRestaurants]= useState([]);
-    const [filteredRest,setFilteredRest]=useState([]);
+   console.log("body rerender")
+    const {listOfRestaurants,filteredRest,setFilteredRest} = useRestaurantList();
+    const RestaurantPromoted = withPromotedLabel(ResCards) 
     const [search,setSearch]=useState("")
+    const onlineStatus=useOnlineStatus();
     
- 
-    useEffect(()=>{
-        fetchData();    
-    },[])
-        const fetchData= async() =>{
-        const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.0488633&lng=76.3260992&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
-            
-        const json= await data.json();
-        console.log(json)
     
-        setListOfRestaurants(json?.data?.cards[3]?.card.card.gridElements?.infoWithStyle?.restaurants)
-        setFilteredRest(json?.data?.cards[3]?.card.card.gridElements?.infoWithStyle?.restaurants)
-        }
-
+    
+        if(onlineStatus===false)
+        return (<h1 className="text-3xl m-5 font-bold">looks like you are offline!!!</h1>)
+        
+        
         if (!listOfRestaurants || listOfRestaurants.length === 0) {
             return (<Shimmer/>);
           }
@@ -39,7 +36,7 @@ const Body= ()=>{
                 }}></input>
                 <button className="px-2 border border-black bg-slate-300" onClick={()=>{
 
-                    console.log(search)   
+                   
                     filterRest=listOfRestaurants.filter((rest)=>rest.info.name.toLowerCase().includes(search.toLowerCase()))  
                     setFilteredRest(filterRest) ;
                     
@@ -59,9 +56,15 @@ const Body= ()=>{
         
            
            <div className="res-containers flex flex-wrap"> 
-           {  
-             filteredRest && filteredRest.map((rest) => (
-              <ResCards key={rest.info.id} resData={rest}/>
+           {    
+            filteredRest.map((rest) => (
+             <Link to={"/rest/"+rest.info.id} key={rest.info.id}>
+                
+                {
+
+                    rest.info.isOpen?<RestaurantPromoted  resData={rest} /> : <ResCards  resData={rest}/>
+                }
+                </Link>     
              ))
 }
            </div> 

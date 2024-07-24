@@ -15,4 +15,19 @@ const ResCards= (props)=>{
     )   
 }
 
+
 export default ResCards;
+
+export const withPromotedLabel =(ResCards) =>{
+ return (props)=>{ 
+  
+  return (
+    <div>
+       <label className="absolute m-2 ml-5 bg-black text-white p-1 rounded-lg">open</label>
+       <ResCards {...props}/>
+    </div>
+  )
+    
+}
+}
+ 
