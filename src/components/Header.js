@@ -1,14 +1,11 @@
 import { NavLink } from 'react-router-dom'
 import {LOGO_URL} from '../utils/constants' 
 import {useState} from 'react';
-import useOnlineStatus from '../utils/useOnlineStatus';
-import Grocery from './Grocery'; 
 import { useSelector } from 'react-redux';
 
 
 const Header = ()=>{
     const [btn,setbtn] = useState('login')
-    const onlineStatus=useOnlineStatus(); 
     const cart = useSelector(store => store.cart.items) 
     console.log(cart)
     return (
@@ -18,12 +15,7 @@ const Header = ()=>{
             </div>
             <div className="nav-items m-3 p-2 flex justify-center items-center ">
                 <ul className='flex gap-x-8'>  
-                    {/* <li className="px-2 hover:bg-zinc-200" >
-                        <NavLink to="/grocery">Grocery</NavLink>
-                    </li> */}
-                    {/* <li className='px-2 text-green-500'>
-                    {onlineStatus ? "online" : "offline"}
-                    </li> */}
+                 
                     <li className="px-2" >
                         <NavLink className={({isActive})=> isActive ? ' bg-gray-200 p-5 rounded-lg text-lg' : ""} to="/">Home</NavLink>
                     </li>
